@@ -13,6 +13,16 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:var(--bg);color:var(--text-color)}
+
+/* FONDO ARRIBA */
+.fondo-top {
+  width: 100%;
+  height: 500px;           /* altura vertical más grande */
+  background: url("cautisticpack.jpg") no-repeat center 45%; /* un poco más de la parte superior visible */
+  background-size: cover;
+}
+
+/* PAGE */
 .page{min-height:200vh;padding-top:140px;position:relative;z-index:1}
 
 /* HEADER */
@@ -42,7 +52,7 @@ nav.nav a {
   -webkit-text-stroke: 0.8px black;
   text-shadow: 0 1.5px 3px rgba(0,0,0,.7);
   transition: transform .2s;
-  margin-left: -10px; /* mover Foro un poco a la izquierda */
+  margin-left: -10px;
 }
 nav.nav a:hover{ transform: scale(1.05); }
 
@@ -62,7 +72,7 @@ nav.nav a:hover{ transform: scale(1.05); }
   top: 0;
   left: 0;
   height: 130px;
-  z-index: 500; /* debajo del header */
+  z-index: 500;
   pointer-events: none;
 }
 
@@ -71,11 +81,18 @@ nav.nav a:hover{ transform: scale(1.05); }
   .seccion{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px}
   .casilla{min-height:200px;padding:10px}
   .espada{width:28px}
-  #chicaHeader{height:100px}
+  #chicaHeader{height:70px;}
+}
+
+@media (max-width:350px){
+  #chicaHeader{height:50px;}
 }
 </style>
 </head>
 <body>
+
+<!-- FRANJA SUPERIOR -->
+<div class="fondo-top"></div>
 
 <!-- AUDIO -->
 <audio id="backgroundMusic" loop>
@@ -102,19 +119,19 @@ nav.nav a:hover{ transform: scale(1.05); }
 <main class="page">
   <section class="seccion">
     <a class="casilla" href="https://amzn.to/3IHXFsY" target="_blank" rel="noopener noreferrer">
-      <img src="Imagenes/tazasretro.PNG" alt="Taza retro" class="producto-img">
+      <img src="Imagenes/tazasretro.PNG" alt="Taza retro" class="producto-img" loading="lazy">
     </a>
     <a class="casilla" href="https://amzn.to/4nS7dAy" target="_blank" rel="noopener noreferrer">
-      <img src="Imagenes/bo2mando.PNG" alt="Mando BO2" class="producto-img">
+      <img src="Imagenes/bo2mando.PNG" alt="Mando BO2" class="producto-img" loading="lazy">
     </a>
     <a class="casilla" href="https://amzn.to/3VXQsYZ" target="_blank" rel="noopener noreferrer">
-      <img src="Imagenes/iphone17case.PNG" alt="Funda iPhone 17" class="producto-img">
+      <img src="Imagenes/iphone17case.PNG" alt="Funda iPhone 17" class="producto-img" loading="lazy">
     </a>
   </section>
 </main>
 
 <script>
-/* HEADER */
+/* HEADER ORIGINAL */
 const headerWrap=document.getElementById('headerWrap');
 const header=document.getElementById('siteHeader');
 let lastScroll=0;
@@ -184,21 +201,11 @@ function animarEspadas(){
   requestAnimationFrame(animarEspadas);
 }
 animarEspadas();
-window.addEventListener('resize',()=>{
-  const w=window.innerWidth,h=window.innerHeight;
-  for(const e of espadas){
-    const leftPct=parseFloat(e.style.left)||(parseFloat(e.dataset.x)/w*100);
-    const topPct=parseFloat(e.style.top)||(parseFloat(e.dataset.y)/h*100);
-    e.dataset.x=leftPct/100*w;
-    e.dataset.y=topPct/100*h;
-  }
-});
 
-/* AUDIO ESTILO SYBAU TWIN: fade-in UNA SOLA VEZ */
+/* AUDIO FADE-IN */
 const music = document.getElementById('backgroundMusic');
 music.volume = 0;
 let fadeInDone = false;
-
 const playMusic = () => {
   if (!fadeInDone) {
     music.play().then(() => {
@@ -218,14 +225,12 @@ const playMusic = () => {
     if (music.paused) music.play().catch(()=>{});
   }
 };
-
 window.addEventListener('load', playMusic);
 window.addEventListener('click', playMusic, { once: true });
 window.addEventListener('keydown', playMusic, { once: true });
 window.addEventListener('touchstart', playMusic, { once: true });
 window.addEventListener('wheel', playMusic, { once: true });
 window.addEventListener('scroll', playMusic, { once: true });
-
 </script>
 </body>
 </html>
