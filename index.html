@@ -26,7 +26,6 @@ html,body{height:100%;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Aria
   align-items: flex-end;   /* coloca los productos abajo de la franja */
   padding-bottom: 20px;    /* separación desde el fondo */
   z-index: 0;
-  overflow: hidden;        /* limita las espadas dentro de la franja */
 }
 
 /* SECCION PRODUCTOS */
@@ -76,8 +75,8 @@ nav.nav a:hover{ transform: scale(1.05); }
 .casilla:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,.4)}
 .producto-img{max-width:100%;max-height:100%;object-fit:contain}
 
-/* FONDO DE ESPADAS DENTRO DE LA FRANJA */
-.fondo-espadas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}
+/* FONDO DE ESPADAS */
+.fondo-espadas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}
 .espada{position:absolute;width:38px;transform-origin:center;will-change:transform,left,top;opacity:0.95}
 
 /* IMAGEN CHICA LADO IZQUIERDO */
@@ -110,7 +109,6 @@ nav.nav a:hover{ transform: scale(1.05); }
 
 <!-- FRANJA SUPERIOR CON PRODUCTOS -->
 <div class="fondo-top">
-  <div class="fondo-espadas" id="fondoEspadas"></div>
   <section class="seccion">
     <a class="casilla" href="https://amzn.to/3IHXFsY" target="_blank" rel="noopener noreferrer">
       <img src="Imagenes/tazasretro.PNG" alt="Taza retro" class="producto-img" loading="lazy">
@@ -132,6 +130,9 @@ nav.nav a:hover{ transform: scale(1.05); }
 <!-- IMAGEN CHICA -->
 <img src="Imagenes/chica1.PNG" alt="Chica" id="chicaHeader">
 
+<!-- FONDO ESPADAS -->
+<div class="fondo-espadas" id="fondoEspadas"></div>
+
 <!-- HEADER -->
 <div class="header-wrap" id="headerWrap">
   <header class="header" id="siteHeader" aria-label="Encabezado principal">
@@ -144,7 +145,7 @@ nav.nav a:hover{ transform: scale(1.05); }
 </div>
 
 <main class="page">
-  <!-- Aquí puedes agregar más secciones -->
+  <!-- Puedes agregar más secciones aquí -->
 </main>
 
 <script>
@@ -163,23 +164,13 @@ header.addEventListener('mouseenter',()=>header.classList.add('expanded'));
 header.addEventListener('mouseleave',()=>{if(window.scrollY!==0)header.classList.remove('expanded');});
 window.addEventListener('load',()=>{if(window.scrollY===0)header.classList.add('expanded');});
 
-/* ESPADAS LIMITADAS A LA FRANJA */
+/* ESPADAS */
 const fondo=document.getElementById('fondoEspadas');
 const NUM_ESPADAS=9;
 const espadas=[];
-const minVerticalGapPx=fondo.offsetHeight*0.08;
-function generarTopConSeparacion(existingYs,attempts=50){
-  const minPct=6,maxPct=92;
-  for(let i=0;i<attempts;i++){
-    const pct=Math.random()*(maxPct-minPct)+minPct;
-    const yPx=pct/100*fondo.offsetHeight;
-    let ok=true;
-    for(const other of existingYs){if(Math.abs(other-yPx)<minVerticalGapPx){ok=false;break;}}
-    if(ok) return yPx;
-  }
-  return (Math.random()*(maxPct-minPct)+minPct)/100*fondo.offsetHeight;
-}
-const existingYs=[];
+const minY = 650; // empieza debajo del fondo-top
+const maxY = window.innerHeight;
+
 for(let i=0;i<NUM_ESPADAS;i++){
   const e=document.createElement('img');
   e.src='Imagenes/espada1.png';
@@ -188,10 +179,9 @@ for(let i=0;i<NUM_ESPADAS;i++){
   e.style.width=sizePx+'px';
   const leftPct=Math.random()*88+6;
   e.style.left=leftPct+'%';
-  const yPx=generarTopConSeparacion(existingYs);
-  existingYs.push(yPx);
-  e.style.top=(yPx/fondo.offsetHeight*100)+'%';
-  e.dataset.x=leftPct/100*fondo.offsetWidth;
+  const yPx=Math.random()*(maxY-minY)+minY;
+  e.style.top=yPx+'px';
+  e.dataset.x=leftPct/100*window.innerWidth;
   e.dataset.y=yPx;
   e.dataset.vx=(Math.random()*0.24+0.06)*(Math.random()<0.5?-1:1);
   e.dataset.vy=(Math.random()*0.14+0.03)*(Math.random()<0.5?-1:1);
@@ -200,19 +190,25 @@ for(let i=0;i<NUM_ESPADAS;i++){
   fondo.appendChild(e);
   espadas.push(e);
 }
+
 function animarEspadas(){
-  const w=fondo.offsetWidth,h=fondo.offsetHeight;
+  const w=window.innerWidth,h=window.innerHeight;
   for(const e of espadas){
     let x=parseFloat(e.dataset.x),y=parseFloat(e.dataset.y);
-    x+=parseFloat(e.dataset.vx);y+=parseFloat(e.dataset.vy);
-    const ew=e.offsetWidth,eh=e.offsetHeight;
-    if(x<-ew)x=w;if(x>w)x=-ew;if(y<-eh)y=h;if(y>h)y=-eh;
+    x+=parseFloat(e.dataset.vx);
+    y+=parseFloat(e.dataset.vy);
+    const ew=e.offsetWidth, eh=e.offsetHeight;
+
+    if(x<-ew)x=w;if(x>w)x=-ew;
+    if(y<-eh)y=h;if(y>h)y=minY; // reinicia desde abajo del fondo
+
     let angle=parseFloat(e.dataset.angle)+parseFloat(e.dataset.vr);
     e.dataset.angle=angle;
-    e.style.left=(x/w*100)+'%';
-    e.style.top=(y/h*100)+'%';
+    e.style.left=x+'px';
+    e.style.top=y+'px';
     e.style.transform=`rotate(${angle}deg)`;
-    e.dataset.x=x; e.dataset.y=y;
+    e.dataset.x=x;
+    e.dataset.y=y;
   }
   requestAnimationFrame(animarEspadas);
 }
