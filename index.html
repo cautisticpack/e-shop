@@ -20,7 +20,7 @@ html,body{height:100%;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Aria
 .fondo-top {
   width: 100%;
   height: 600px;
-  background: url("cautisticpack.jpg") no-repeat center 45%;
+  background: rgba(255, 215, 0, 0.25) url("cautisticpack.jpg") no-repeat center 45%;
   background-size: cover;
   position: relative;
   display: flex;
@@ -32,12 +32,76 @@ html,body{height:100%;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Aria
 
 .seccion {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   max-width: 1250px;
   width: 98%;
   position: relative;
   z-index: 1; 
+}
+
+/* 4 IMÁGENES SUPERIORES CON EFECTO DORADO Y FUEGO */
+.seccion .casilla {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffec8b 50%, #ffd700 100%);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  transition: transform .3s ease;
+}
+
+.seccion .casilla img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.seccion .casilla::before {
+  content:"";
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.2) 100%);
+  transform: rotate(45deg) translateX(-100%);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s;
+}
+
+.seccion .casilla::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,165,0,0.4) 0%, rgba(255,69,0,0.2) 40%, transparent 70%);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s;
+  mix-blend-mode: screen;
+}
+
+.seccion .casilla:hover::before {
+  opacity:1;
+  animation: reflejo 1.2s linear infinite;
+}
+
+.seccion .casilla:hover::after {
+  opacity:1;
+  animation: fuego 1.5s linear infinite;
+}
+
+@keyframes reflejo {
+  0% { transform: rotate(45deg) translateX(-100%); }
+  100% { transform: rotate(45deg) translateX(200%); }
+}
+
+@keyframes fuego {
+  0%, 100% { background-position:0% 0%; }
+  50% { background-position:100% 100%; }
 }
 
 /* HEADER */
@@ -46,33 +110,17 @@ header.header{pointer-events:auto;height:var(--header-height);border-radius:12px
 header.header .header-img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-1}
 header.header.expanded{height:var(--header-expanded);padding:12px 22px;box-shadow:0 12px 30px rgba(0,0,0,.55)}
 
-.brand {
-  font-weight: 800;
-  letter-spacing: .3px;
-  font-size: 26px;
-  color: var(--text-color);
-  -webkit-text-stroke: 1px black;
-  text-shadow: 0 2px 4px rgba(0,0,0,.7);
-}
+.brand {font-weight:800;letter-spacing:.3px;font-size:26px;color:var(--text-color);-webkit-text-stroke:1px black;text-shadow:0 2px 4px rgba(0,0,0,.7);}
 
 nav.nav{display:flex;gap:18px;align-items:center;opacity:0;transform:translateY(-6px);transition:opacity .22s ease,transform .22s ease}
 header.header.expanded nav.nav, header.header:hover nav.nav{opacity:1;transform:translateY(0)}
-nav.nav a {
-  text-decoration: none;
-  color: var(--text-color);
-  font-weight: 700;
-  font-size: 22px;
-  -webkit-text-stroke: 0.8px black;
-  text-shadow: 0 1.5px 3px rgba(0,0,0,.7);
-  transition: transform .2s;
-  margin-left: -10px;
-}
-nav.nav a:hover{ transform: scale(1.05); }
+nav.nav a {text-decoration:none;color:var(--text-color);font-weight:700;font-size:22px;-webkit-text-stroke:.8px black;text-shadow:0 1.5px 3px rgba(0,0,0,.7);transition:transform .2s;margin-left:-10px}
+nav.nav a:hover{transform:scale(1.05);}
 
-/* CASILLAS PRODUCTOS */
-.casilla{background-color:rgba(255,255,255,0.9);border-radius:12px;display:flex;justify-content:center;align-items:center;padding:20px;min-height:260px;transition:transform .3s ease,box-shadow .3s ease}
+/* CASILLAS PRODUCTOS EXISTENTES */
+.casilla{display:flex;justify-content:center;align-items:center;padding:20px;min-height:260px;transition:transform .3s ease,box-shadow .3s ease}
 .casilla:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,.4)}
-.producto-img{max-width:100%;max-height:100%;object-fit:contain}
+.producto-img{max-width:100%;max-height:100%;object-fit:contain; border-radius:12px;}
 
 /* FONDO DE ESPADAS */
 .fondo-espadas{
@@ -88,20 +136,13 @@ nav.nav a:hover{ transform: scale(1.05); }
 .espada{position:absolute;width:38px;transform-origin:center;will-change:transform,left,top;opacity:0.95}
 
 /* IMAGEN CHICA */
-#chicaHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 130px;
-  z-index: 500;
-  pointer-events: none;
-}
+#chicaHeader { position: fixed; top: 0; left: 0; height: 130px; z-index: 500; pointer-events: none; }
 
 /* PAGE */
 .page{min-height:200vh;position:relative;}
 
-/* SECCION HOLDERS */
-.holders-section {
+/* SECCIONES Y MARCOS EXISTENTES (Holders, Watches, Mugs, Spinners) */
+.holders-section, .watches-section, .mugs-section, .spinners-section {
   max-width: 1250px;
   width: 95%;
   margin: 40px auto;
@@ -110,7 +151,7 @@ nav.nav a:hover{ transform: scale(1.05); }
   z-index: 2;
 }
 
-.holders-title {
+.holders-title, .watches-title, .mugs-title, .spinners-title {
   font-size: 28px;
   font-weight: 800;
   color: #fff;
@@ -122,18 +163,21 @@ nav.nav a:hover{ transform: scale(1.05); }
   text-shadow: 0 2px 4px rgba(0,0,0,.7);
 }
 
-.holders-title .flecha { font-size: 28px; font-weight: 900; }
+.holders-title .flecha, .watches-title .flecha, .mugs-title .flecha, .spinners-title .flecha {
+  font-size: 28px;
+  font-weight: 900;
+}
 
-.holders-grid {
+.holders-grid, .watches-grid, .mugs-grid, .spinners-grid {
   display: flex;
   gap: 20px;
   flex-wrap: nowrap;
   overflow-x: auto;
   scrollbar-width: none;
 }
-.holders-grid::-webkit-scrollbar { display: none; }
+.holders-grid::-webkit-scrollbar, .watches-grid::-webkit-scrollbar, .mugs-grid::-webkit-scrollbar, .spinners-grid::-webkit-scrollbar { display: none; }
 
-.holder-img {
+.holder-img, .watch-img, .mug-img, .spinner-img {
   height: 180px;
   object-fit: contain;
   border-radius: 12px;
@@ -142,153 +186,35 @@ nav.nav a:hover{ transform: scale(1.05); }
   transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
 }
 
-/* Colores personalizados Holders */
+/* Colores y marcos originales (Holders, Watches, Mugs, Spinners) */
 .holder-img.pistolasoporte { background: rgba(135, 206, 250, 0.25); }
 .holder-img.bo2mando { background: rgba(255, 0, 0, 0.25); }
 .holder-img.caballerosoporte { background: rgba(255, 215, 0, 0.25); }
-
-/* Hover: más opaco */
 .holder-img.pistolasoporte:hover { background: rgba(135, 206, 250, 0.5); }
 .holder-img.bo2mando:hover { background: rgba(255, 0, 0, 0.5); }
 .holder-img.caballerosoporte:hover { background: rgba(255, 215, 0, 0.5); }
 
-/* Efecto marco brillante */
-.holder-img::before {
-  content: "";
-  position: absolute;
-  top: -2px; left: -2px;
-  right: -2px; bottom: -2px;
-  border-radius: 14px;
-  background: linear-gradient(120deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.1) 100%);
-  background-size: 200% 200%;
-  opacity: 0;
-  transition: opacity .3s;
-  pointer-events: none;
-}
-.holder-img:hover::before {
-  opacity: 1;
-  animation: shine 1.2s linear infinite;
-}
-
-/* SECCION WATCHES */
-.watches-section {
-  max-width: 1250px;
-  width: 95%;
-  margin: 40px auto;
-  padding: 10px;
-  position: relative;
-  z-index: 2;
-}
-
-.watches-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 18px;
-  -webkit-text-stroke: 1px black;
-  text-shadow: 0 2px 4px rgba(0,0,0,.7);
-}
-
-.watches-title .flecha { font-size: 28px; font-weight: 900; }
-
-.watches-grid {
-  display: flex;
-  gap: 20px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.watches-grid::-webkit-scrollbar { display: none; }
-
-.watch-img {
-  height: 180px;
-  object-fit: contain;
-  border-radius: 12px;
-  padding: 10px;
-  position: relative;
-  transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
-}
-
-/* Colores personalizados Watches */
 .watch-img.rosa { background: rgba(135, 206, 250, 0.25); }
 .watch-img.retro { background: rgba(135, 206, 250, 0.25); }
 .watch-img.opium { background: rgba(255, 215, 0, 0.25); }
-
-/* Hover: más opaco */
 .watch-img.rosa:hover { background: rgba(135, 206, 250, 0.5); }
 .watch-img.retro:hover { background: rgba(135, 206, 250, 0.5); }
 .watch-img.opium:hover { background: rgba(255, 215, 0, 0.5); }
 
-/* Efecto marco brillante */
-.watch-img::before {
-  content: "";
-  position: absolute;
-  top: -2px; left: -2px;
-  right: -2px; bottom: -2px;
-  border-radius: 14px;
-  background: linear-gradient(120deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.1) 100%);
-  background-size: 200% 200%;
-  opacity: 0;
-  transition: opacity .3s;
-  pointer-events: none;
-}
-.watch-img:hover::before { opacity: 1; animation: shine 1.2s linear infinite; }
-
-/* SECCION MUGS */
-.mugs-section {
-  max-width: 1250px;
-  width: 95%;
-  margin: 40px auto;
-  padding: 10px;
-  position: relative;
-  z-index: 2;
-}
-
-.mugs-title {
-  font-size: 28px;
-  font-weight: 800;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 18px;
-  -webkit-text-stroke: 1px black;
-  text-shadow: 0 2px 4px rgba(0,0,0,.7);
-}
-
-.mugs-title .flecha { font-size: 28px; font-weight: 900; }
-
-.mugs-grid {
-  display: flex;
-  gap: 20px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.mugs-grid::-webkit-scrollbar { display: none; }
-
-.mug-img {
-  height: 180px;
-  object-fit: contain;
-  border-radius: 12px;
-  padding: 10px;
-  position: relative;
-  transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
-}
-
-/* Colores personalizados Mugs */
-.mug-img.mario { background: rgba(135, 206, 250, 0.25); }   /* azul celeste */
-.mug-img.retro { background: rgba(255, 215, 0, 0.25); }     /* dorado */
-
-/* Hover: más opaco */
+.mug-img.mario { background: rgba(135, 206, 250, 0.25); }
+.mug-img.retro { background: rgba(255, 215, 0, 0.25); }
 .mug-img.mario:hover { background: rgba(135, 206, 250, 0.5); }
 .mug-img.retro:hover { background: rgba(255, 215, 0, 0.5); }
 
+.spinner-img.spinner1 { background: rgba(135, 206, 250, 0.25); }
+.spinner-img.spinner2 { background: rgba(255, 215, 0, 0.25); }
+.spinner-img.spinner3 { background: rgba(255, 0, 0, 0.25); }
+.spinner-img.spinner1:hover { background: rgba(135, 206, 250, 0.5); }
+.spinner-img.spinner2:hover { background: rgba(255, 215, 0, 0.5); }
+.spinner-img.spinner3:hover { background: rgba(255, 0, 0, 0.5); }
+
 /* Efecto marco brillante */
-.mug-img::before {
+.holder-img::before, .watch-img::before, .mug-img::before, .spinner-img::before {
   content: "";
   position: absolute;
   top: -2px; left: -2px;
@@ -300,16 +226,18 @@ nav.nav a:hover{ transform: scale(1.05); }
   transition: opacity .3s;
   pointer-events: none;
 }
-.mug-img:hover::before { opacity: 1; animation: shine 1.2s linear infinite; }
+.holder-img:hover::before, .watch-img:hover::before, .mug-img:hover::before, .spinner-img:hover::before {
+  opacity: 1; 
+  animation: shine 1.2s linear infinite;
+}
 
-/* Keyframes Brillo */
 @keyframes shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
 /* Responsive */
 @media (max-width:600px){
-  .holders-title,.watches-title,.mugs-title { font-size: 22px; }
-  .holders-title .flecha,.watches-title .flecha,.mugs-title .flecha { font-size: 22px; }
-  .holder-img,.watch-img,.mug-img { height: 130px; }
+  .holders-title,.watches-title,.mugs-title,.spinners-title { font-size: 22px; }
+  .holders-title .flecha,.watches-title .flecha,.mugs-title .flecha,.spinners-title .flecha { font-size: 22px; }
+  .holder-img,.watch-img,.mug-img,.spinner-img { height: 130px; }
 }
 @media (max-width:500px){
   .seccion{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px}
@@ -333,13 +261,16 @@ nav.nav a:hover{ transform: scale(1.05); }
     <a class="casilla" href="https://amzn.to/4nS7dAy" target="_blank" rel="noopener noreferrer">
       <img src="Imagenes/bo2mando.PNG" alt="Mando BO2" class="producto-img" loading="lazy">
     </a>
+    <a class="casilla" href="https://amzn.to/3IRLdH5" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/spinner2.PNG" alt="Spinner 2" class="producto-img" loading="lazy">
+    </a>
     <a class="casilla" href="https://amzn.to/3VXQsYZ" target="_blank" rel="noopener noreferrer">
-      <img src="Imagenes/iphone17case.PNG" alt="Funda iPhone 17" class="producto-img" loading="lazy">
+      <img src="Imagenes/relojopium.PNG" alt="Reloj Opium" class="producto-img" loading="lazy">
     </a>
   </section>
 </div>
 
-<!-- SECCION HOLDERS -->
+<!-- SECCIONES EXISTENTES (Holders, Watches, Mugs, Spinners) -->
 <section class="holders-section">
   <h2 class="holders-title">Holders <span class="flecha">→</span></h2>
   <div class="holders-grid">
@@ -349,7 +280,6 @@ nav.nav a:hover{ transform: scale(1.05); }
   </div>
 </section>
 
-<!-- SECCION WATCHES -->
 <section class="watches-section">
   <h2 class="watches-title">Watches <span class="flecha">→</span></h2>
   <div class="watches-grid">
@@ -359,12 +289,20 @@ nav.nav a:hover{ transform: scale(1.05); }
   </div>
 </section>
 
-<!-- SECCION MUGS -->
 <section class="mugs-section">
   <h2 class="mugs-title">Mugs <span class="flecha">→</span></h2>
   <div class="mugs-grid">
     <img src="Imagenes/tazamario.PNG" alt="Taza Mario" class="mug-img mario" loading="lazy">
     <img src="Imagenes/tazasretro.PNG" alt="Taza Retro" class="mug-img retro" loading="lazy">
+  </div>
+</section>
+
+<section class="spinners-section">
+  <h2 class="spinners-title">Spinners <span class="flecha">→</span></h2>
+  <div class="spinners-grid">
+    <img src="Imagenes/spinner1.PNG" alt="Spinner 1" class="spinner-img spinner1" loading="lazy">
+    <img src="Imagenes/spinner2.PNG" alt="Spinner 2" class="spinner-img spinner2" loading="lazy">
+    <img src="Imagenes/spinner3.PNG" alt="Spinner 3" class="spinner-img spinner3" loading="lazy">
   </div>
 </section>
 
@@ -390,22 +328,14 @@ nav.nav a:hover{ transform: scale(1.05); }
   </header>
 </div>
 
-<main class="page">
-  <!-- Secciones adicionales aquí -->
-</main>
+<main class="page"></main>
 
 <script>
 /* HEADER */
 const headerWrap=document.getElementById('headerWrap');
 const header=document.getElementById('siteHeader');
 let lastScroll=0;
-window.addEventListener('scroll',()=>{
-  const currentScroll=window.scrollY;
-  headerWrap.style.top=(currentScroll>lastScroll && currentScroll>100)?'-100px':'0';
-  lastScroll=currentScroll;
-  if(window.scrollY===0){header.classList.add('expanded'); headerWrap.style.top='20px';}
-  else header.classList.remove('expanded');
-});
+window.addEventListener('scroll',()=>{const currentScroll=window.scrollY;headerWrap.style.top=(currentScroll>lastScroll && currentScroll>100)?'-100px':'0';lastScroll=currentScroll;if(window.scrollY===0){header.classList.add('expanded'); headerWrap.style.top='20px';}else header.classList.remove('expanded');});
 header.addEventListener('mouseenter',()=>header.classList.add('expanded'));
 header.addEventListener('mouseleave',()=>{if(window.scrollY!==0)header.classList.remove('expanded');});
 window.addEventListener('load',()=>{if(window.scrollY===0)header.classList.add('expanded');});
@@ -414,42 +344,8 @@ window.addEventListener('load',()=>{if(window.scrollY===0)header.classList.add('
 const fondo=document.getElementById('fondoEspadas');
 const NUM_ESPADAS=9;
 const espadas=[];
-for(let i=0;i<NUM_ESPADAS;i++){
-  const e=document.createElement('img');
-  e.src='Imagenes/espada1.png';
-  e.className='espada';
-  const sizePx=Math.round((Math.random()*12)+32);
-  e.style.width=sizePx+'px';
-  const leftPct=Math.random()*88+6;
-  e.style.left=leftPct+'%';
-  const topPct=Math.random()*100; 
-  e.style.top=topPct+'%';
-  e.dataset.x=leftPct/100*fondo.offsetWidth;
-  e.dataset.y=topPct/100*fondo.offsetHeight;
-  e.dataset.vx=(Math.random()*0.24+0.06)*(Math.random()<0.5?-1:1);
-  e.dataset.vy=(Math.random()*0.14+0.03)*(Math.random()<0.5?-1:1);
-  e.dataset.angle=Math.random()*360;
-  e.dataset.vr=Math.random()*0.6-0.3;
-  fondo.appendChild(e);
-  espadas.push(e);
-}
-function animarEspadas(){
-  const w=fondo.offsetWidth,h=fondo.offsetHeight;
-  for(const e of espadas){
-    let x=parseFloat(e.dataset.x),y=parseFloat(e.dataset.y);
-    x+=parseFloat(e.dataset.vx);y+=parseFloat(e.dataset.vy);
-    const ew=e.offsetWidth,eh=e.offsetHeight;
-    if(x<-ew)x=w;if(x>w)x=-ew;
-    if(y<-eh)y=h;if(y>h)y=-eh;
-    let angle=parseFloat(e.dataset.angle)+parseFloat(e.dataset.vr);
-    e.dataset.angle=angle;
-    e.style.left=(x/w*100)+'%';
-    e.style.top=(y/h*100)+'%';
-    e.style.transform=`rotate(${angle}deg)`;
-    e.dataset.x=x; e.dataset.y=y;
-  }
-  requestAnimationFrame(animarEspadas);
-}
+for(let i=0;i<NUM_ESPADAS;i++){const e=document.createElement('img');e.src='Imagenes/espada1.png';e.className='espada';const sizePx=Math.round((Math.random()*12)+32);e.style.width=sizePx+'px';const leftPct=Math.random()*88+6;e.style.left=leftPct+'%';const topPct=Math.random()*100;e.style.top=topPct+'%';e.dataset.x=leftPct/100*fondo.offsetWidth;e.dataset.y=topPct/100*fondo.offsetHeight;e.dataset.vx=(Math.random()*0.24+0.06)*(Math.random()<0.5?-1:1);e.dataset.vy=(Math.random()*0.14+0.03)*(Math.random()<0.5?-1:1);e.dataset.angle=Math.random()*360;e.dataset.vr=Math.random()*0.6-0.3;fondo.appendChild(e);espadas.push(e);}
+function animarEspadas(){const w=fondo.offsetWidth,h=fondo.offsetHeight;for(const e of espadas){let x=parseFloat(e.dataset.x),y=parseFloat(e.dataset.y);x+=parseFloat(e.dataset.vx);y+=parseFloat(e.dataset.vy);const ew=e.offsetWidth,eh=e.offsetHeight;if(x<-ew)x=w;if(x>w)x=-ew;if(y<-eh)y=h;if(y>h)y=-eh;let angle=parseFloat(e.dataset.angle)+parseFloat(e.dataset.vr);e.dataset.angle=angle;e.style.left=(x/w*100)+'%';e.style.top=(y/h*100)+'%';e.style.transform=`rotate(${angle}deg)`;e.dataset.x=x; e.dataset.y=y;}requestAnimationFrame(animarEspadas);}
 animarEspadas();
 
 /* AUDIO FADE-IN */
