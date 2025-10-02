@@ -122,20 +122,16 @@ nav.nav a:hover{transform:scale(1.05);}
 .casilla:hover{transform:scale(1.05);box-shadow:0 8px 20px rgba(0,0,0,.4)}
 .producto-img{max-width:100%;max-height:100%;object-fit:contain; border-radius:12px;}
 
-/* FONDO DE ESPADAS */
-.fondo-espadas{
-  position: absolute;
-  top: 600px;
-  left: 0;
-  width: 100%;
-  bottom: 0; /* llega justo al final del contenido */
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 0;
-}
-
 /* IMAGEN CHICA */
-#chicaHeader { position: fixed; top:0; left:0; height:130px; z-index:500; pointer-events:none; }
+#chicaHeader { 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  height: 130px; 
+  width: auto; 
+  z-index: 500; 
+  pointer-events: none; 
+}
 
 /* PAGE */
 .page { position: relative; }
@@ -253,7 +249,6 @@ footer {
 @media (max-width:500px){
   .seccion{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px}
   .casilla{min-height:200px;padding:10px}
-  .espada{width:28px}
   #chicaHeader{height:70px;}
 }
 @media (max-width:350px){
@@ -330,11 +325,11 @@ footer {
     <a href="https://amzn.to/4gSkhni" target="_blank" rel="noopener noreferrer">
       <img src="Imagenes/spinner1.PNG" alt="Spinner 1" class="spinner-img spinner1" loading="lazy">
     </a>
-    <a href="https://amzn.to/476Knzu" target="_blank" rel="noopener noreferrer">
-      <img src="Imagenes/spinner2.PNG" alt="Spinner 2" class="spinner-img spinner2" loading="lazy">
-    </a>
     <a href="https://amzn.to/4mN6EXR" target="_blank" rel="noopener noreferrer">
       <img src="Imagenes/spinner3.PNG" alt="Spinner 3" class="spinner-img spinner3" loading="lazy">
+    </a>
+    <a href="https://amzn.to/476Knzu" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/spinner2.PNG" alt="Spinner 2" class="spinner-img spinner2" loading="lazy">
     </a>
   </div>
 </section>
@@ -352,16 +347,13 @@ footer {
 <!-- IMAGEN CHICA -->
 <img src="Imagenes/chica1.PNG" alt="Chica" id="chicaHeader">
 
-<!-- FONDO ESPADAS -->
-<div class="fondo-espadas" id="fondoEspadas"></div>
-
 <!-- HEADER -->
 <div class="header-wrap" id="headerWrap">
   <header class="header" id="siteHeader" aria-label="Encabezado principal">
     <img src="cautisticpack1.jpg" alt="Caballeros" class="header-img">
     <div class="brand">Mi Tienda</div>
     <nav class="nav">
-      <a href="foro.html">Foro</a>
+      <!-- Foro eliminado -->
     </nav>
   </header>
 </div>
@@ -377,14 +369,6 @@ window.addEventListener('scroll',()=>{const currentScroll=window.scrollY;headerW
 header.addEventListener('mouseenter',()=>header.classList.add('expanded'));
 header.addEventListener('mouseleave',()=>{if(window.scrollY!==0)header.classList.remove('expanded');});
 window.addEventListener('load',()=>{if(window.scrollY===0)header.classList.add('expanded');});
-
-/* ESPADAS */
-const fondo=document.getElementById('fondoEspadas');
-const NUM_ESPADAS=9;
-const espadas=[];
-for(let i=0;i<NUM_ESPADAS;i++){const e=document.createElement('img');e.src='Imagenes/espada1.png';e.className='espada';const sizePx=Math.round((Math.random()*12)+32);e.style.width=sizePx+'px';const leftPct=Math.random()*88+6;e.style.left=leftPct+'%';const topPct=Math.random()*100;e.style.top=topPct+'%';e.dataset.x=leftPct/100*fondo.offsetWidth;e.dataset.y=topPct/100*fondo.offsetHeight;e.dataset.vx=(Math.random()*0.24+0.06)*(Math.random()<0.5?-1:1);e.dataset.vy=(Math.random()*0.14+0.03)*(Math.random()<0.5?-1:1);e.dataset.angle=Math.random()*360;e.dataset.vr=Math.random()*0.6-0.3;fondo.appendChild(e);espadas.push(e);}
-function animarEspadas(){const w=fondo.offsetWidth,h=fondo.offsetHeight;for(const e of espadas){let x=parseFloat(e.dataset.x),y=parseFloat(e.dataset.y);x+=parseFloat(e.dataset.vx);y+=parseFloat(e.dataset.vy);const ew=e.offsetWidth,eh=e.offsetHeight;if(x<-ew)x=w;if(x>w)x=-ew;if(y<-eh)y=h;if(y>h)y=-eh;let angle=parseFloat(e.dataset.angle)+parseFloat(e.dataset.vr);e.dataset.angle=angle;e.style.left=(x/w*100)+'%';e.style.top=(y/h*100)+'%';e.style.transform=`rotate(${angle}deg)`;e.dataset.x=x; e.dataset.y=y;}requestAnimationFrame(animarEspadas);}
-animarEspadas();
 
 /* AUDIO FADE-IN */
 const music = document.getElementById('backgroundMusic');
@@ -418,5 +402,3 @@ window.addEventListener('scroll', playMusic, { once: true });
 </script>
 </body>
 </html>
-
-
