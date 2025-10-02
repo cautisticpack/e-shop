@@ -30,7 +30,6 @@ html,body{height:100%;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Aria
   z-index: 0;
 }
 
-/* SECCION PRODUCTOS */
 .seccion {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
@@ -146,7 +145,7 @@ nav.nav a:hover{ transform: scale(1.05); }
   transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
 }
 
-/* Colores iniciales */
+/* Colores personalizados Holders */
 .holder-img.pistolasoporte { background: rgba(135, 206, 250, 0.25); }
 .holder-img.bo2mando { background: rgba(255, 0, 0, 0.25); }
 .holder-img.caballerosoporte { background: rgba(255, 215, 0, 0.25); }
@@ -174,6 +173,80 @@ nav.nav a:hover{ transform: scale(1.05); }
   animation: shine 1.2s linear infinite;
 }
 
+/* SECCION WATCHES */
+.watches-section {
+  max-width: 1250px;
+  width: 95%;
+  margin: 40px auto;
+  padding: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.watches-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  -webkit-text-stroke: 1px black;
+  text-shadow: 0 2px 4px rgba(0,0,0,.7);
+}
+
+.watches-title .flecha {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.watches-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.watches-grid::-webkit-scrollbar { display: none; }
+
+.watch-img {
+  height: 180px;
+  object-fit: contain;
+  border-radius: 12px;
+  padding: 10px;
+  position: relative;
+  transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+}
+
+/* Colores personalizados Watches */
+.watch-img.rosa { background: rgba(135, 206, 250, 0.25); }   /* azul celeste */
+.watch-img.retro { background: rgba(135, 206, 250, 0.25); }  /* azul celeste */
+.watch-img.opium { background: rgba(255, 215, 0, 0.25); }    /* dorado */
+
+/* Hover: más opaco */
+.watch-img.rosa:hover { background: rgba(135, 206, 250, 0.5); }
+.watch-img.retro:hover { background: rgba(135, 206, 250, 0.5); }
+.watch-img.opium:hover { background: rgba(255, 215, 0, 0.5); }
+
+/* Efecto marco brillante */
+.watch-img::before {
+  content: "";
+  position: absolute;
+  top: -2px; left: -2px;
+  right: -2px; bottom: -2px;
+  border-radius: 14px;
+  background: linear-gradient(120deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0.1) 100%);
+  background-size: 200% 200%;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+}
+.watch-img:hover::before {
+  opacity: 1;
+  animation: shine 1.2s linear infinite;
+}
+
+/* Keyframes Brillo */
 @keyframes shine {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
@@ -181,9 +254,9 @@ nav.nav a:hover{ transform: scale(1.05); }
 
 /* Responsive */
 @media (max-width:600px){
-  .holders-title { font-size: 22px; }
-  .holders-title .flecha { font-size: 22px; }
-  .holder-img { height: 130px; }
+  .holders-title,.watches-title { font-size: 22px; }
+  .holders-title .flecha,.watches-title .flecha { font-size: 22px; }
+  .holder-img,.watch-img { height: 130px; }
 }
 @media (max-width:500px){
   .seccion{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px}
@@ -220,6 +293,16 @@ nav.nav a:hover{ transform: scale(1.05); }
     <img src="Imagenes/pistolasoporte.png" alt="Soporte Pistola" class="holder-img pistolasoporte" loading="lazy">
     <img src="Imagenes/bo2mando.png" alt="Mando BO2" class="holder-img bo2mando" loading="lazy">
     <img src="Imagenes/caballerosoporte.png" alt="Soporte Caballero" class="holder-img caballerosoporte" loading="lazy">
+  </div>
+</section>
+
+<!-- SECCION WATCHES -->
+<section class="watches-section">
+  <h2 class="watches-title">Watches <span class="flecha">→</span></h2>
+  <div class="watches-grid">
+    <img src="Imagenes/relojrosa.png" alt="Reloj Rosa" class="watch-img rosa" loading="lazy">
+    <img src="Imagenes/relojretro.png" alt="Reloj Retro" class="watch-img retro" loading="lazy">
+    <img src="Imagenes/relojopium.png" alt="Reloj Opium" class="watch-img opium" loading="lazy">
   </div>
 </section>
 
