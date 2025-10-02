@@ -128,20 +128,19 @@ nav.nav a:hover{transform:scale(1.05);}
   top: 600px;
   left: 0;
   width: 100%;
-  height: calc(100vh + 2000px);
+  bottom: 0; /* llega justo al final del contenido */
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
 }
-.espada{position:absolute;width:38px;transform-origin:center;will-change:transform,left,top;opacity:0.95}
 
 /* IMAGEN CHICA */
-#chicaHeader { position: fixed; top: 0; left: 0; height: 130px; z-index: 500; pointer-events: none; }
+#chicaHeader { position: fixed; top:0; left:0; height:130px; z-index:500; pointer-events:none; }
 
 /* PAGE */
-.page{min-height:200vh;position:relative;}
+.page { position: relative; }
 
-/* SECCIONES Y MARCOS EXISTENTES (Holders, Watches, Mugs, Spinners) */
+/* SECCIONES Y MARCOS EXISTENTES */
 .holders-section, .watches-section, .mugs-section, .spinners-section {
   max-width: 1250px;
   width: 95%;
@@ -186,7 +185,7 @@ nav.nav a:hover{transform:scale(1.05);}
   transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
 }
 
-/* Colores y marcos originales (Holders, Watches, Mugs, Spinners) */
+/* Colores y marcos originales */
 .holder-img.pistolasoporte { background: rgba(135, 206, 250, 0.25); }
 .holder-img.bo2mando { background: rgba(255, 0, 0, 0.25); }
 .holder-img.caballerosoporte { background: rgba(255, 215, 0, 0.25); }
@@ -233,6 +232,18 @@ nav.nav a:hover{transform:scale(1.05);}
 
 @keyframes shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
+/* Footer estilizado */
+footer {
+  text-align: center;
+  padding: 18px 0;
+  color: #ffd700;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+  background: #111;
+}
+
 /* Responsive */
 @media (max-width:600px){
   .holders-title,.watches-title,.mugs-title,.spinners-title { font-size: 22px; }
@@ -270,41 +281,68 @@ nav.nav a:hover{transform:scale(1.05);}
   </section>
 </div>
 
-<!-- SECCIONES EXISTENTES (Holders, Watches, Mugs, Spinners) -->
+<!-- SECCIONES -->
 <section class="holders-section">
   <h2 class="holders-title">Holders <span class="flecha">→</span></h2>
   <div class="holders-grid">
-    <img src="Imagenes/pistolasoporte.PNG" alt="Soporte Pistola" class="holder-img pistolasoporte" loading="lazy">
-    <img src="Imagenes/bo2mando.PNG" alt="Mando BO2" class="holder-img bo2mando" loading="lazy">
-    <img src="Imagenes/caballerosoporte.PNG" alt="Soporte Caballero" class="holder-img caballerosoporte" loading="lazy">
+    <a href="https://amzn.to/4pSpVK4" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/pistolasoporte.PNG" alt="Soporte Pistola" class="holder-img pistolasoporte" loading="lazy">
+    </a>
+    <a href="https://amzn.to/4nzfOZe" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/bo2mando.PNG" alt="Mando BO2" class="holder-img bo2mando" loading="lazy">
+    </a>
+    <a href="https://amzn.to/4mNrFlk" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/caballerosoporte.PNG" alt="Soporte Caballero" class="holder-img caballerosoporte" loading="lazy">
+    </a>
   </div>
 </section>
 
 <section class="watches-section">
   <h2 class="watches-title">Watches <span class="flecha">→</span></h2>
   <div class="watches-grid">
-    <img src="Imagenes/relojrosa.PNG" alt="Reloj Rosa" class="watch-img rosa" loading="lazy">
-    <img src="Imagenes/relojretro.PNG" alt="Reloj Retro" class="watch-img retro" loading="lazy">
-    <img src="Imagenes/relojopium.PNG" alt="Reloj Opium" class="watch-img opium" loading="lazy">
+    <a href="https://sale.dhgate.com/bRBxDw38" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/relojrosa.PNG" alt="Reloj Rosa" class="watch-img rosa" loading="lazy">
+    </a>
+    <a href="https://sale.dhgate.com/pUxMYb79" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/relojretro.PNG" alt="Reloj Retro" class="watch-img retro" loading="lazy">
+    </a>
+    <a href="https://sale.dhgate.com/qTt7zn39" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/relojopium.PNG" alt="Reloj Opium" class="watch-img opium" loading="lazy">
+    </a>
   </div>
 </section>
 
 <section class="mugs-section">
   <h2 class="mugs-title">Mugs <span class="flecha">→</span></h2>
   <div class="mugs-grid">
-    <img src="Imagenes/tazamario.PNG" alt="Taza Mario" class="mug-img mario" loading="lazy">
-    <img src="Imagenes/tazasretro.PNG" alt="Taza Retro" class="mug-img retro" loading="lazy">
+    <a href="https://amzn.to/3Wk1W96" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/tazamario.PNG" alt="Taza Mario" class="mug-img mario" loading="lazy">
+    </a>
+    <a href="https://amzn.to/3KuJ6JS" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/tazasretro.PNG" alt="Taza Retro" class="mug-img retro" loading="lazy">
+    </a>
   </div>
 </section>
 
 <section class="spinners-section">
   <h2 class="spinners-title">Spinners <span class="flecha">→</span></h2>
   <div class="spinners-grid">
-    <img src="Imagenes/spinner1.PNG" alt="Spinner 1" class="spinner-img spinner1" loading="lazy">
-    <img src="Imagenes/spinner2.PNG" alt="Spinner 2" class="spinner-img spinner2" loading="lazy">
-    <img src="Imagenes/spinner3.PNG" alt="Spinner 3" class="spinner-img spinner3" loading="lazy">
+    <a href="https://amzn.to/4gSkhni" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/spinner1.PNG" alt="Spinner 1" class="spinner-img spinner1" loading="lazy">
+    </a>
+    <a href="https://amzn.to/476Knzu" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/spinner2.PNG" alt="Spinner 2" class="spinner-img spinner2" loading="lazy">
+    </a>
+    <a href="https://amzn.to/4mN6EXR" target="_blank" rel="noopener noreferrer">
+      <img src="Imagenes/spinner3.PNG" alt="Spinner 3" class="spinner-img spinner3" loading="lazy">
+    </a>
   </div>
 </section>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2025 autisticpack
+</footer>
 
 <!-- AUDIO -->
 <audio id="backgroundMusic" loop>
